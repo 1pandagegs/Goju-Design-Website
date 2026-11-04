@@ -1,101 +1,70 @@
-/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* safe-area helper (iOS notch) */
-:root { --safe-pad: env(safe-area-inset-bottom, 0); }
-
-/* --- global reset --- */
-html, body, #root {
-  height: 100%;
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box;
+/* Type scale from the Figma text styles (Web/Desktop/*, Web/Mobile/*, Web/Shared/*).
+   Mobile sizes apply below 768px, desktop sizes from 1024px. */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream font-sans font-medium text-ink antialiased;
+  }
+  img {
+    display: block;
+    max-width: 100%;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.gold-deep");
+    outline-offset: 3px;
+  }
 }
 
-* { box-sizing: border-box; }
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-page px-5 md:px-10 lg:px-[120px];
+  }
+  .section {
+    @apply py-16 md:py-24 lg:py-[120px];
+  }
 
-/* site background + font */
-body {
-  @apply font-exo2 bg-lightBrown;
-  min-height: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  padding-bottom: var(--safe-pad);
-  overflow-x: hidden;
-}
+  .t-display {
+    @apply text-[42px] font-extrabold leading-[1.05] tracking-[-0.02em] md:text-[64px] md:leading-none lg:text-[88px] lg:tracking-[-0.025em];
+  }
+  .t-h1 {
+    @apply text-[32px] font-extrabold leading-[1.12] tracking-[-0.012em] md:text-[48px] lg:text-[64px] lg:leading-[1.04] lg:tracking-[-0.02em];
+  }
+  .t-h2 {
+    @apply text-[28px] font-extrabold leading-[1.12] tracking-[-0.012em] lg:text-[44px] lg:leading-[1.1] lg:tracking-[-0.015em];
+  }
+  .t-h3 {
+    @apply text-[22px] font-bold leading-[1.28] tracking-[-0.003em] lg:text-[28px] lg:leading-[1.25] lg:tracking-[-0.005em];
+  }
+  .t-h4 {
+    @apply text-[18px] font-semibold leading-[1.35] lg:text-[20px];
+  }
+  .t-body-l {
+    @apply text-[17px] font-medium leading-[1.58] lg:text-[20px] lg:leading-[1.6];
+  }
+  .t-body {
+    @apply text-[16px] font-medium leading-[1.62];
+  }
+  .t-small {
+    @apply text-[14px] font-medium leading-[1.5];
+  }
+  .t-label {
+    @apply text-[13px] font-semibold uppercase leading-[1.4] tracking-[0.16em];
+  }
+  .t-button {
+    @apply text-[15px] font-semibold leading-[1.2] tracking-[0.005em];
+  }
 
-/* Make the React root a column flex so footer can stick to bottom */
-#root {
-  display: flex !important;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0; /* IMPORTANT: remove padding from root to avoid gaps */
-}
-
-/* Inner wrapper for centered content and page padding */
-.app-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem; /* move page padding here (not on #root) */
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* the page main content should expand to push footer to bottom */
-main {
-  flex: 1 0 auto;
-}
-
-/* media defaults to avoid inline whitespace and height quirks */
-img, video {
-  display: block;
-  max-width: 100%;
-}
-
-/* remove section-level margins that collapse into whitespace */
-section, header, footer, main {
-  margin: 0;
-  padding: 0;
-}
-
-/* ensure footer is flush and won't create stray margins */
-footer {
-  margin: 0 !important;
-  padding: 0 !important;
-  flex-shrink: 0;
-}
-
-/* Make sure the last element inside main doesn't add extra bottom margin */
-main > *:last-child {
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-
-/* tiny helpful reset for images & video inside hero */
-.video-hero, video { height: auto; display: block; }
-
-
-/* Optional debug outline (uncomment to debug) */
-/* * { outline: 1px dashed rgba(255,0,0,0.06) !important; } */
-
-/* Animated gradient text effect */
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 6s ease infinite;
-}
-
-/* Add to your CSS or component styles */
-.prevent-shift {
-  min-height: 1px; /* Prevents collapse */
-  contain: layout; /* Prevents layout shifts */
+  .field-input {
+    @apply w-full rounded-[12px] border border-line bg-cream px-[18px] py-[14px] text-[16px] font-medium text-ink outline-none transition-colors placeholder:text-muted focus:border-gold-deep;
+  }
+  .field-input[aria-invalid="true"] {
+    @apply border-gold-deep;
+  }
 }

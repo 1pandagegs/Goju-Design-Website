@@ -1,12 +1,25 @@
-# React + Vite
+# gojudesign.com
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The Goju Design Solutions Ltd website, built from the "Redesign 2026" pages in the Figma file.
 
-Currently, two official plugins are available:
+## Run it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+npm run dev      # local preview at http://localhost:5173
+npm run build    # production build in dist/
+npm run lint
+```
 
-## Expanding the ESLint configuration
+Hosted on Vercel (`vercel.json` sends every route to the single-page app).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Where things live
+
+- `src/data/` holds the page content: services, case studies, FAQ, legal text and contact details (`site.js`). Most copy changes happen here.
+- `src/assets/images/` holds the images exported from Figma. Reference them by file name (without extension) in the data files.
+- `src/pages/` holds one file per page. `src/components/` holds the header, footer, buttons, cards and pop-ups.
+- Colours and type sizes come from the Figma variables and live in `tailwind.config.js` and `src/index.css`.
+
+## Forms
+
+The brief, start-a-project, booking and waitlist forms send through EmailJS using the same account and template as the previous site (`EMAILJS` in `src/data/site.js`).

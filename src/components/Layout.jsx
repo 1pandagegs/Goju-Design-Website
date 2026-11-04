@@ -1,73 +1,106 @@
-// src/components/Layout.jsx
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { FaCommentDots } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import Header from "./Header";
 import Footer from "./Footer";
+import Icon from "./Icon";
+import { Button } from "./ui";
+import { whatsappLink } from "../data/site";
 
-const Layout = ({ children }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
+const COOKIE_KEY = "goju-cookie-choice";
 
-  // Only show the back button on specific service detail paths
-  const serviceIds = [
-    "brand-identity",
-    "ui-ux-design",
-    "web-design",
-    "mobile-apps",
-    "digital-marketing",
-    "consulting",
-    "ai-agent-building",
-  ];
+function readCookieChoice() {
+  try {
+    return localStorage.getItem(COOKIE_KEY);
+  } catch {
+    return "unavailable";
+  }
+}
 
-  const shouldShowBackButton = serviceIds.some(id =>
-    location.pathname.includes(id)
-  );
+// Overlay / Cookie banner
+function CookieBanner() {
+  const [choice, setChoice] = useState(readCookieChoice);
+  const [settings, setSettings] = useState(false);
+  const [analytics, setAnalytics] = useState(true);
+  if (choice) return null;
 
-  // Don't show floating contact button on contact page
-  const shouldShowFloatingContactButton = !location.pathname.includes('/contact');
-
-  // Check if we're on the home page
-  const isHomePage = location.pathname === '/' || location.pathname === '/home';
-
-  const handleContactClick = () => {
-    navigate('/contact');
+  const save = (value) => {
+    try {
+      localStorage.setItem(COOKIE_KEY, value);
+    } catch {
+      // Storage is blocked, so the banner simply hides for this visit.
+    }
+    setChoice(value);
   };
 
   return (
-    <div className="w-full min-h-screen font-exo flex flex-col m-0 p-0" style={{ margin: 0, padding: 0 }}>
-      {/* Main content area */}
-      <div className="flex-1 m-0 p-0">
-        {/* Conditional padding and spacing based on page */}
-        <div className={isHomePage ? "m-0 p-0" : "pt-24 px-4 md:px-20"}>
-          {shouldShowBackButton && (
-            <div className="mb-6">
-              <button
-                onClick={() => navigate(-1)}
-                className="inline-block bg-[#B17F4A] text-white py-2 px-4 rounded-md shadow hover:bg-[#9d6e3f] transition duration-300"
-              >
-                ← Back
-              </button>
-            </div>
-          )}
-          {children}
+    <div className="fixed inset-x-0 bottom-0 z-50 p-4 lg:bottom-8 lg:p-0">
+      <div className="wrap !px-0 lg:!px-[120px]">
+        <div className="flex flex-col gap-4 rounded-[16px] bg-night px-5 py-5 shadow-modal lg:flex-row lg:items-center lg:justify-between lg:px-6">
+          <div className="flex flex-col gap-1">
+            <p className="t-body font-semibold text-cream">We use a few cookies</p>
+            <p className="t-small text-[13px] text-sand">
+              Only to understand how the site is used and to keep it working. Read our{" "}
+              <Link to="/cookie-policy" className="underline hover:text-cream">cookie policy</Link>.
+            </p>
+            {settings && (
+              <label className="mt-2 flex items-center gap-3 t-small text-cream">
+                <input type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} className="size-4 accent-[#b09b71]" />
+                Allow analytics cookies
+              </label>
+            )}
+          </div>
+          <div className="flex shrink-0 gap-3">
+            {settings ? (
+              <Button variant="onDark" onClick={() => save(analytics ? "all" : "essential")}>Save choice</Button>
+            ) : (
+              <Button variant="onDark" onClick={() => setSettings(true)}>Settings</Button>
+            )}
+            <Button variant="gold" onClick={() => save("all")}>Accept</Button>
+          </div>
         </div>
       </div>
-
-      {/* Floating Contact Button - appears on all pages except contact */}
-      {shouldShowFloatingContactButton && (
-        <button
-          onClick={handleContactClick}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-16 h-16 sm:w-14 sm:h-14 bg-[#B17F4A] hover:bg-[#9A6B3A] text-white rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 active:scale-95 group"
-          aria-label="Contact Us"
-        >
-          <FaCommentDots className="text-xl sm:text-lg group-hover:animate-bounce" />
-        </button>
-      )}
-
-      {/* Footer - Positioned at bottom with no spacing */}
-      <Footer className="mt-0 mb-0 -mt-4" style={{ marginTop: '-1rem', marginBottom: 0, paddingBottom: 0 }} />
     </div>
   );
-};
+}
 
-export default Layout;
+// Scroll to the top on page change, or to the #hash target when there is one.
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.slice(1));
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    }
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+}
+
+export default function Layout() {
+  return (
+    <div className="flex min-h-screen flex-col">
+      <ScrollManager />
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-cream">
+        Skip to content
+      </a>
+      <Header />
+      <main id="main" className="flex-1">
+        <Outlet />
+      </main>
+      <Footer />
+      <a
+        href={whatsappLink()}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Chat with us on WhatsApp"
+        className="fixed bottom-5 right-5 z-40 flex size-[60px] items-center justify-center rounded-full bg-gold text-night shadow-float transition-transform hover:scale-105 lg:bottom-8 lg:right-10"
+      >
+        <Icon name="whatsapp" size={26} />
+      </a>
+      <CookieBanner />
+    </div>
+  );
+}

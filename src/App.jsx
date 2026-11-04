@@ -1,67 +1,61 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ScrollToTop from "./components/ScrollToTop";
-import Navbar from "./components/Navbar";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
+import { ModalProvider } from "./components/modals/ModalContext";
 import Home from "./pages/Home";
-import AboutPage from './pages/About';
-import Services from "./components/Services";
-import ServicesPage from "./pages/ServicesPage";
+import Work from "./pages/Work";
+import CaseStudy from "./pages/CaseStudy";
+import Services from "./pages/Services";
+import ServiceDetail from "./pages/ServiceDetail";
+import Products from "./pages/Products";
+import Mundayne from "./pages/Mundayne";
+import JonzeeWorld from "./pages/JonzeeWorld";
+import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
-import Cookie from './pages/Cookie';
-import Privacy from './pages/Privacy';
-import TermsOfService from './pages/TermsOfService';
+import Legal from "./pages/Legal";
+import NotFound from "./pages/NotFound";
 
-// Service Detail Pages
-import UIDesign from "./pages/serviceDetails/UIDesign";
-import WebDesign from "./pages/serviceDetails/WebDesign";
-import MobileAppDesign from "./pages/serviceDetails/MobileAppDesign";
-import BrandIdentity from "./pages/serviceDetails/BrandIdentity";
-import DigitalMarketingDesign from "./pages/serviceDetails/DigitalMarketingDesign";
-import Consulting from "./pages/serviceDetails/Consulting";
-import AiAgentBuilding from "./pages/serviceDetails/AiAgentBuilding";
+// Addresses from the previous site, sent to their closest page on the new one.
+const redirects = {
+  "/portfolio": "/work",
+  "/our-services": "/services",
+  "/consultation": "/contact",
+  "/cookie": "/cookie-policy",
+  "/privacy": "/privacy-policy",
+  "/services/web-design": "/services/websites",
+  "/services/ui-ux-design": "/services/brand-design",
+  "/services/brand-identity": "/services/brand-design",
+  "/services/mobile-apps": "/services/websites",
+  "/services/digital-marketing": "/services/social-media",
+  "/services/consulting": "/services",
+  "/services/ai-agent-building": "/services/ai-automation",
+};
 
-
-// Portfolio & Consultation
-import Portfolio from "./pages/Portfolio";
-import Consultation from "./pages/Consultation";
-
-function App() {
+export default function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <Navbar />
+    <ModalProvider>
       <Routes>
-+       <Route path="/" element={<Home />} />
-+     </Routes>
-      <Layout>
-        <Routes>
-          <Route path="/about" element={<AboutPage />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/work" element={<Work />} />
+          <Route path="/work/:slug" element={<CaseStudy />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/our-services" element={<ServicesPage />} />
+          <Route path="/services/:slug" element={<ServiceDetail />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/mundayne" element={<Mundayne />} />
+          <Route path="/jonzee-world" element={<JonzeeWorld />} />
+          <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/cookie" element={<Cookie />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-
-          
-          {/* Service Detail Routes */}
-          <Route path="/services/ui-ux-design" element={<UIDesign />} />
-          <Route path="/services/web-design" element={<WebDesign />} />
-          <Route path="/services/mobile-apps" element={<MobileAppDesign />} />
-          <Route path="/services/brand-identity" element={<BrandIdentity />} />
-          <Route path="/services/digital-marketing" element={<DigitalMarketingDesign />} />
-          <Route path="/services/consulting" element={<Consulting />} />
-          <Route path="/services/ai-agent-building" element={<AiAgentBuilding />} />
-
-          
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/consultation" element={<Consultation />} />
-        </Routes>
-      </Layout>
-    </Router>
+          <Route path="/privacy-policy" element={<Legal doc="privacy" />} />
+          <Route path="/terms-of-service" element={<Legal doc="terms" />} />
+          <Route path="/cookie-policy" element={<Legal doc="cookies" />} />
+          {Object.entries(redirects).map(([from, to]) => (
+            <Route key={from} path={from} element={<Navigate to={to} replace />} />
+          ))}
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </ModalProvider>
   );
 }
-
-export default App;
