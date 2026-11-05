@@ -30,6 +30,15 @@ function WhatsAppIcon({ size = 18, ...props }) {
   );
 }
 
+// TikTok glyph in the same 2px line style.
+function TikTokIcon({ size = 18, ...props }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M21 7.917v4.034a9.948 9.948 0 0 1-5-1.951v4.5a6.5 6.5 0 1 1-8-6.326v4.326a2.5 2.5 0 1 0 4 2V3h4.083A6.005 6.005 0 0 0 21 7.917z" />
+    </svg>
+  );
+}
+
 const radix = {
   arrow: ArrowRightIcon,
   "arrow-up-right": ArrowTopRightIcon,
@@ -61,6 +70,7 @@ const lucide = {
 
 export default function Icon({ name, size = 16, className = "" }) {
   if (name === "whatsapp") return <WhatsAppIcon size={size} className={className} />;
+  if (name === "tiktok") return <TikTokIcon size={size} className={className} />;
   const R = radix[name];
   if (R) return <R width={size} height={size} className={className} aria-hidden="true" />;
   const L = lucide[name];

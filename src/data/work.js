@@ -19,7 +19,7 @@ export const caseStudies = [
       ["Industry", "Podcast and media"],
       ["Services", "Production, social media, website"],
       ["Status", "Ongoing, new episodes every other Sunday"],
-      ["Links", "youtube.com/@a_message_for_her"],
+      ["Links", [["youtube.com/@a_message_for_her", "https://www.youtube.com/@a_message_for_her"]]],
     ],
     heroImage: { key: "amfhYoutube", label: "A Message For Her, channel art or recording session" },
     brief:
@@ -62,7 +62,7 @@ export const caseStudies = [
       ["Industry", "Real estate development and construction"],
       ["Location", "Mabushi, Abuja"],
       ["Services", "Website, Instagram management"],
-      ["Links", "as5group.com · @as5_group"],
+      ["Links", [["as5group.com", "https://as5group.com"], ["@as5_group", "https://www.instagram.com/as5_group"]]],
     ],
     heroImage: { key: "as5Hero", label: "as5group.com homepage, Three of Us estate render" },
     brief:
@@ -104,7 +104,7 @@ export const caseStudies = [
       ["Industry", "Export trading and commodity supply"],
       ["Location", "Nigeria"],
       ["Services", "Website rebuild, deployment, forms"],
-      ["Links", "sabalilimited.com"],
+      ["Links", [["sabalilimited.com", "https://sabalilimited.com"]]],
     ],
     heroImage: { key: "sabHome", label: "sabalilimited.com homepage" },
     brief:

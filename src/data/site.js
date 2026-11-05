@@ -8,12 +8,14 @@ export const whatsappLink = (text = "Hi Goju Design, I'd like to start a project
   `https://wa.me/2347038649237?text=${encodeURIComponent(text)}`;
 
 export const socials = {
-  instagram: "https://www.instagram.com/gojudesign",
+  instagram: "https://www.instagram.com/goju_design",
   linkedin: "https://www.linkedin.com/company/gojudesign/",
-  youtube: "https://www.youtube.com/@a_message_for_her",
 };
 
-export const jonzeeInstagram = "https://www.instagram.com/jonzeeworld";
+export const jonzeeSocials = {
+  tiktok: "https://www.tiktok.com/@jonzee_world",
+  instagram: "https://www.instagram.com/jonzee_world",
+};
 
 export const navLinks = [
   { label: "Work", to: "/work" },

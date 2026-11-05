@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Icon from "../components/Icon";
 import { ArrowLink, Button, Label, Picture, Placeholder, SectionHeader, Status } from "../components/ui";
 import { CaseCard, ServiceCard } from "../components/sections";
 import { useModals } from "../components/modals/ModalContext";
@@ -29,7 +31,7 @@ function Hero() {
           We design, build and run the digital side of your business, from your website to your Instagram, so you can focus on the work itself.
         </p>
         <div className="flex flex-col gap-[14px] sm:flex-row">
-          <Button icon="whatsapp" href={whatsappLink()}>Start a project on WhatsApp</Button>
+          <Button icon="whatsapp" href={whatsappLink()}>Start a project</Button>
           <Button variant="secondary" icon="arrow" to="/work">See our work</Button>
         </div>
       </div>
@@ -44,16 +46,23 @@ function Hero() {
   );
 }
 
+// Client logos, taken from the headers of each client's website.
+const clientLogos = [
+  ["client-as5", "AS5 Group", "/work/as5-group", "h-9 lg:h-11"],
+  ["client-sabali", "Sabali Limited", "/work/sabali-limited", "h-11 lg:h-14"],
+  ["client-amfh", "A Message For Her", "/work/a-message-for-her", "h-8 lg:h-10"],
+];
+
 function Clients() {
-  const names = ["AS5 Group", "Sabali Limited", "A Message For Her"];
   return (
     <section className="bg-paper">
-      <div className="wrap flex flex-col gap-3 py-9 lg:flex-row lg:items-center lg:justify-between">
+      <div className="wrap flex flex-col gap-5 py-9 lg:flex-row lg:items-center lg:justify-between">
         <Label muted>Clients we work with</Label>
-        <p className="t-h3 text-ink/80 lg:hidden">{names.join(" · ")}</p>
-        <div className="hidden items-center gap-[72px] lg:flex">
-          {names.map((n) => (
-            <span key={n} className="t-h3 whitespace-nowrap text-ink/80">{n}</span>
+        <div className="flex flex-wrap items-center gap-x-10 gap-y-5 lg:gap-[72px]">
+          {clientLogos.map(([key, name, to, size]) => (
+            <Link key={key} to={to} className="opacity-90 transition-opacity hover:opacity-100">
+              <img src={img(key)} alt={name} className={`${size} w-auto`} />
+            </Link>
           ))}
         </div>
       </div>
@@ -188,19 +197,76 @@ function MadeByGoju() {
   );
 }
 
-function Testimonial() {
+const testimonials = [
+  ["“I love the website. It feels contemporary and premium, and it tells our story perfectly.”", "Engr Abuba Sahabi", "CEO, AS5 Group", "client-as5"],
+  ["“The website is perfect. It represents Sabali exactly, and the move to hard code did not miss a single detail.”", "Abdullahi Junaid", "CEO, Sabali Limited", "client-sabali"],
+  ["“I was super impressed with how the whole podcast was coordinated and delivered, from production to content management and distribution.”", "Gina", "Host, A Message For Her", "client-amfh"],
+];
+
+// "What clients say" carousel: advances every 7 seconds and pauses while hovered or focused.
+function Testimonials() {
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const go = (d) => setI((v) => (v + d + testimonials.length) % testimonials.length);
+
+  useEffect(() => {
+    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setTimeout(() => setI((v) => (v + 1) % testimonials.length), 7000);
+    return () => clearTimeout(t);
+  }, [i, paused]);
+
   return (
-    <section className="wrap section flex flex-col items-center gap-8 text-center lg:px-[240px]">
+    <section
+      className="wrap section flex flex-col items-center gap-8 text-center"
+      aria-roledescription="carousel"
+      aria-label="What clients say"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       <Label>What clients say</Label>
-      <blockquote className="t-h2 text-ink">
-        “I love the website. It feels contemporary and premium, and it tells our story perfectly.”
-      </blockquote>
-      <div className="flex items-center gap-[14px] text-left">
-        <span className="flex size-12 items-center justify-center rounded-full bg-sand t-small font-semibold text-gold-deep" aria-hidden="true">AS</span>
-        <div className="flex flex-col gap-[2px]">
-          <p className="t-h4 text-ink">Engr Abuba Sahabi</p>
-          <p className="t-small text-muted">CEO, AS5 Group</p>
+      <div className="grid w-full lg:px-[120px]">
+        {testimonials.map(([quote, name, role, logo], n) => (
+          <figure
+            key={name}
+            aria-hidden={n !== i}
+            aria-roledescription="slide"
+            aria-label={`${n + 1} of ${testimonials.length}`}
+            className={`col-start-1 row-start-1 flex flex-col items-center gap-8 transition-opacity duration-500 ${n === i ? "opacity-100" : "pointer-events-none opacity-0"}`}
+          >
+            <blockquote className="t-h2 text-ink">{quote}</blockquote>
+            <figcaption className="flex items-center gap-[14px] text-left">
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-paper p-2" aria-hidden="true">
+                <img src={img(logo)} alt="" className="max-h-full max-w-full object-contain" />
+              </span>
+              <span className="flex flex-col gap-[2px]">
+                <span className="t-h4 text-ink">{name}</span>
+                <span className="t-small text-muted">{role}</span>
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <div className="flex items-center gap-5">
+        <button type="button" onClick={() => go(-1)} aria-label="Previous testimonial" className="flex size-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-ink">
+          <Icon name="chevron-left" size={18} />
+        </button>
+        <div className="flex gap-2">
+          {testimonials.map(([, name], n) => (
+            <button
+              key={name}
+              type="button"
+              onClick={() => setI(n)}
+              aria-label={`Show testimonial ${n + 1}`}
+              aria-current={n === i}
+              className={`h-2 rounded-full transition-all ${n === i ? "w-6 bg-gold-deep" : "w-2 bg-line hover:bg-gold"}`}
+            />
+          ))}
         </div>
+        <button type="button" onClick={() => go(1)} aria-label="Next testimonial" className="flex size-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-ink">
+          <Icon name="chevron-right" size={18} />
+        </button>
       </div>
     </section>
   );
@@ -215,7 +281,7 @@ export default function Home() {
       <WhatWeDo />
       <HowWeWork />
       <MadeByGoju />
-      <Testimonial />
+      <Testimonials />
     </>
   );
 }

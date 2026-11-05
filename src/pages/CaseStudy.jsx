@@ -28,7 +28,18 @@ export default function CaseStudy() {
           {study.meta.map(([k, v]) => (
             <div key={k} className="flex flex-col gap-2 py-6 pr-6">
               <dt className="t-label text-muted">{k}</dt>
-              <dd className="t-body break-words text-ink">{v}</dd>
+              <dd className="t-body break-words text-ink">
+                {Array.isArray(v)
+                  ? v.map(([label, href], i) => (
+                      <span key={href}>
+                        {i > 0 && " · "}
+                        <a href={href} target="_blank" rel="noreferrer" className="underline decoration-line underline-offset-4 hover:text-gold-deep hover:decoration-gold-deep">
+                          {label}
+                        </a>
+                      </span>
+                    ))
+                  : v}
+              </dd>
             </div>
           ))}
         </dl>

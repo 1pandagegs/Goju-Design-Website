@@ -15,14 +15,15 @@ const team = [
     name: "Ayo Gegeoju",
     role: "Creative Designer & Team Lead",
     bio: "Leads the team and sets the creative direction on every project, from brand and web design to content and our own products.",
-    linkedin: "https://www.linkedin.com/company/gojudesign/",
+    linkedin: "https://www.linkedin.com/in/ayo-gegeoju-61745a142",
+    portfolio: "https://www.ayogegeoju.com.ng",
   },
   {
     key: "david",
     name: "David Abraham",
     role: "Front-End Developer",
     bio: "Turns approved designs into clean, fast, working code, and keeps sites running smoothly after launch.",
-    linkedin: "https://www.linkedin.com/company/gojudesign/",
+    linkedin: "https://www.linkedin.com/in/chimdiebube-abraham",
   },
 ];
 
@@ -32,7 +33,7 @@ export default function About() {
       <PageHeader
         label="About"
         title="A studio built on doing the work properly."
-        intro="Goju Design Solutions Ltd is a design and development studio in Abuja. We started because too many good businesses were let down by clunky websites and inconsistent branding. We fix that, and then we keep it working."
+        intro="Goju Design Solutions Ltd is a design and development studio in Abuja. We build websites and web apps, shape brands, run social media and produce content, including full podcasts, and set up AI agents and automations. We started because too many good businesses were let down by their digital side. We fix that, and then we keep it working."
       />
 
       <section className="bg-paper">
@@ -67,9 +68,16 @@ export default function About() {
               <h3 className="t-h3 mt-2 text-ink">{p.name}</h3>
               <Label>{p.role}</Label>
               <p className="t-body text-muted">{p.bio}</p>
-              <a href={p.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 t-small text-muted hover:text-ink">
-                <Icon name="linkedin" size={16} /> LinkedIn
-              </a>
+              <div className="flex flex-wrap gap-5">
+                <a href={p.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 t-small text-muted hover:text-ink">
+                  <Icon name="linkedin" size={16} /> LinkedIn
+                </a>
+                {p.portfolio && (
+                  <a href={p.portfolio} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 t-small text-muted hover:text-ink">
+                    <Icon name="arrow-up-right" size={16} /> Portfolio
+                  </a>
+                )}
+              </div>
             </div>
           ))}
         </div>

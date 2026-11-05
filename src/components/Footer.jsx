@@ -32,7 +32,6 @@ function SocialLinks() {
   const items = [
     ["instagram", socials.instagram, "Instagram"],
     ["linkedin", socials.linkedin, "LinkedIn"],
-    ["youtube", socials.youtube, "YouTube"],
   ];
   return (
     <div className="flex gap-[10px]">

@@ -1,6 +1,6 @@
 import Icon from "../components/Icon";
 import { Breadcrumb, Button, Label, Picture } from "../components/ui";
-import { jonzeeInstagram } from "../data/site";
+import { jonzeeSocials } from "../data/site";
 
 const rarity = [
   ["Common", "Standard card", "#3fa34d", "jzCard01"],
@@ -17,6 +17,22 @@ const characters = [
   ["jz014", "Character #014", "#014", "Varsity tank and camo long jorts."],
 ];
 
+// Round social button. Without an href it renders as a static "coming soon" icon.
+function SocialIcon({ icon, label, href }) {
+  const cls = "flex size-11 items-center justify-center rounded-full border border-cream text-cream";
+  if (!href)
+    return (
+      <span aria-label={label} title={label} className={`${cls} relative cursor-default opacity-50`}>
+        <Icon name={icon} size={18} />
+      </span>
+    );
+  return (
+    <a href={href} target="_blank" rel="noreferrer" aria-label={label} className={`${cls} transition-colors hover:bg-cream hover:text-night`}>
+      <Icon name={icon} size={18} />
+    </a>
+  );
+}
+
 export default function JonzeeWorld() {
   return (
     <div className="bg-night">
@@ -27,9 +43,14 @@ export default function JonzeeWorld() {
         <p className="t-body-l max-w-[680px] text-sand">
           A Nigerian collectible universe where contemporary art meets fashion and Gen Z culture. Characters, places and stories, collected as physical trading cards.
         </p>
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
           <Button variant="gold" icon="arrow" href="#neon-street" target="_self">Explore Neon Street</Button>
-          <Button variant="onDark" href={jonzeeInstagram}>Follow @jonzeeworld</Button>
+          <div className="flex items-center gap-3">
+            <span className="t-small text-sand">Follow @jonzee_world</span>
+            <SocialIcon icon="tiktok" label="TikTok" href={jonzeeSocials.tiktok} />
+            <SocialIcon icon="instagram" label="Instagram" href={jonzeeSocials.instagram} />
+            <SocialIcon icon="youtube" label="YouTube, coming soon" />
+          </div>
         </div>
         <Picture image={{ key: "jzCrew", label: "Jonzee World crew: Adam and friends" }} className="mt-4 aspect-[2/1] w-full" eager />
       </section>
@@ -74,7 +95,15 @@ export default function JonzeeWorld() {
             <h2 className="t-h1 text-cream">Every card is verifiable.</h2>
             <p className="t-body-l text-sand">Scan the QR code on any card to open its own page and check that it is genuine.</p>
             <div>
-              <Button variant="onDark" icon="arrow" href={jonzeeInstagram}>Verify a card</Button>
+              {/* The verification site is not live yet, so this stays a static button. */}
+              <span
+                aria-disabled="true"
+                title="Card verification is coming soon"
+                className="inline-flex cursor-default items-center gap-[10px] rounded-full border-[1.5px] border-cream/50 px-[26px] py-[16px] t-button text-cream/70"
+              >
+                Verify a card
+                <span className="rounded-full bg-cream/10 px-2 py-[2px] text-[11px] uppercase tracking-[0.12em] text-sand">Soon</span>
+              </span>
             </div>
           </div>
           <Picture image={{ key: "jzVerify", label: "Card verification page on a phone" }} className="aspect-[480/420] w-full md:w-[420px] lg:w-[480px] lg:shrink-0" />
