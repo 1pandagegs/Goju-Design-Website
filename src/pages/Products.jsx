@@ -29,8 +29,8 @@ export default function Products() {
             <ArrowLink to="/products/mundayne">See the app</ArrowLink>
           </div>
           <div className="flex items-center justify-center gap-4 lg:gap-5">
-            <Phone label="Mundayne home screen" className="h-[420px] w-[204px] sm:h-[580px] sm:w-[280px]" />
-            <Phone label="Mundayne progress screen" className="hidden h-[499px] w-[241px] sm:block" />
+            <Phone screen="mundayneHome" className="h-[420px] w-[204px] sm:h-[580px] sm:w-[280px]" />
+            <Phone screen="mundayneProgress" className="hidden h-[499px] w-[241px] sm:block" />
           </div>
         </div>
 

@@ -1,11 +1,11 @@
-import { Breadcrumb, Button, Label, Placeholder, Status } from "../components/ui";
+import { Breadcrumb, Button, Label, Status } from "../components/ui";
 import { FaqSection } from "../components/sections";
-import { Phone, WaitlistInline } from "../components/product";
+import { Phone, ScreensPanel, WaitlistInline } from "../components/product";
 
 const features = [
-  ["Mundayne home screen", "A clear daily routine", "See the week at a glance and filter habits by health, productivity or faith."],
-  ["Mundayne progress screen", "Progress you can see", "Today’s completion, remaining habits and your best streak, all on one screen."],
-  ["Mundayne journal screen", "A journal for the day", "Log your mood and energy, and write a short reflection on how the day went."],
+  ["mundayneHome", "A clear daily routine", "See the week at a glance and filter habits by health, productivity or faith."],
+  ["mundayneProgress", "Progress you can see", "Today’s completion, remaining habits and your best streak, all on one screen."],
+  ["mundayneJournal", "A journal for the day", "Log your mood and energy, and write a short reflection on how the day went."],
 ];
 
 const faq = [
@@ -29,9 +29,9 @@ export default function Mundayne() {
           <p className="t-small text-[13px] text-muted">We will message you once, on launch day. No spam.</p>
         </div>
         <div className="flex flex-1 items-center justify-center gap-3 lg:gap-4">
-          <Phone label="Mundayne journal screen" className="hidden h-[493px] w-[238px] sm:block" />
-          <Phone label="Mundayne home screen" className="h-[460px] w-[222px] sm:h-[580px] sm:w-[280px]" />
-          <Phone label="Mundayne progress screen" className="hidden h-[493px] w-[238px] xl:block" />
+          <Phone screen="mundayneJournal" className="hidden h-[493px] w-[238px] sm:block" />
+          <Phone screen="mundayneHome" className="h-[460px] w-[222px] sm:h-[580px] sm:w-[280px]" />
+          <Phone screen="mundayneProgress" className="hidden h-[493px] w-[238px] xl:block" />
         </div>
       </section>
 
@@ -45,7 +45,7 @@ export default function Mundayne() {
           <div className="grid gap-6 md:grid-cols-3">
             {features.map(([shot, title, body]) => (
               <div key={title} className="flex flex-col gap-4 rounded-[20px] border border-line bg-cream p-5 lg:p-6">
-                <Placeholder label={shot} className="h-[220px] w-full" />
+                <ScreensPanel screens={[shot]} className="h-[220px] w-full" />
                 <h3 className="t-h3 text-ink">{title}</h3>
                 <p className="t-body text-muted">{body}</p>
               </div>

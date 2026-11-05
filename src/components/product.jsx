@@ -1,13 +1,36 @@
 import { useState } from "react";
 import Icon from "./Icon";
-import { Placeholder } from "./ui";
+import { img } from "../data/images";
 import { useModals } from "./modals/ModalContext";
 
-// Phone frame around a screen placeholder, as in the Mundayne mockups.
-export function Phone({ label, className = "" }) {
+const screenLabels = {
+  mundayneHome: "Mundayne home screen",
+  mundayneProgress: "Mundayne progress screen",
+  mundayneJournal: "Mundayne journal screen",
+  mundayneSettings: "Mundayne settings screen",
+};
+
+// Phone frame around a Mundayne app screenshot.
+export function Phone({ screen, className = "" }) {
   return (
-    <div className={`rounded-[36px] border-[8px] border-ink bg-ink ${className}`}>
-      <Placeholder label={label} className="size-full !rounded-[28px]" />
+    <div className={`overflow-hidden rounded-[36px] border-[8px] border-ink bg-ink shadow-float ${className}`}>
+      <img src={img(screen)} alt={screenLabels[screen]} loading="lazy" className="size-full rounded-[28px] object-cover object-top" />
+    </div>
+  );
+}
+
+// Wide panel with one or more phone screens rising from the bottom edge.
+export function ScreensPanel({ screens, dark, className = "" }) {
+  return (
+    <div className={`relative flex items-start justify-center gap-4 overflow-hidden rounded-[20px] px-6 pt-8 ${dark ? "bg-ink" : "bg-sand"} ${className}`}>
+      {screens.map((s, i) => (
+        <div
+          key={s}
+          className={`w-[46%] max-w-[200px] shrink-0 overflow-hidden rounded-t-[26px] border-[6px] border-b-0 border-night bg-night ${i % 2 ? "translate-y-6" : ""}`}
+        >
+          <img src={img(s)} alt={screenLabels[s]} loading="lazy" className="block w-full rounded-t-[20px]" />
+        </div>
+      ))}
     </div>
   );
 }

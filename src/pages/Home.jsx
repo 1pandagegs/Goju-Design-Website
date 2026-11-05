@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../components/Icon";
-import { ArrowLink, Button, Label, Picture, Placeholder, SectionHeader, Status } from "../components/ui";
+import { ArrowLink, Button, Label, Picture, SectionHeader, Status } from "../components/ui";
+import { ScreensPanel } from "../components/product";
 import { CaseCard, ServiceCard } from "../components/sections";
 import { useModals } from "../components/modals/ModalContext";
 import { caseStudies } from "../data/work";
@@ -156,7 +157,7 @@ function MadeByGoju() {
         {/* Desktop: two large tiles */}
         <div className="hidden gap-8 md:grid md:grid-cols-2">
           <Link to="/products/mundayne" className="group flex flex-col gap-[18px]">
-            <Placeholder dark label="Mundayne home screen" className="h-[300px] w-full" />
+            <ScreensPanel dark screens={["mundayneHome", "mundayneProgress"]} className="h-[300px] w-full" />
             <Status className="self-start">Coming soon</Status>
             <h3 className="t-h3 text-cream group-hover:text-gold">Mundayne</h3>
             <Label dark>Mobile app · In development</Label>
@@ -173,7 +174,7 @@ function MadeByGoju() {
         {/* Mobile: compact list */}
         <div className="flex flex-col md:hidden">
           <Link to="/products/mundayne" className="flex items-center gap-4 border-b border-cream/40 pb-6">
-            <Placeholder dark label="" className="size-[88px] shrink-0 !p-0 !rounded-[16px]" />
+            <img src={img("mundayneHome")} alt="Mundayne home screen" className="size-[88px] shrink-0 rounded-[16px] object-cover object-top" />
             <div className="flex flex-col gap-2">
               <h3 className="t-h3 text-cream">Mundayne</h3>
               <p className="t-small text-sand">Original app, coming to Android and iOS.</p>

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ArrowLink, Label, Picture, Placeholder, Status } from "../components/ui";
+import { ArrowLink, Label, Picture, Status } from "../components/ui";
+import { ScreensPanel } from "../components/product";
 import { CaseCard, PageHeader } from "../components/sections";
 import { useModals } from "../components/modals/ModalContext";
 import { caseStudies } from "../data/work";
@@ -61,7 +62,7 @@ export default function Work() {
             </div>
             <div className="grid gap-12 md:grid-cols-2 md:gap-8">
               <div className="flex flex-col gap-4">
-                <Placeholder label="Mundayne home screen" className="h-[300px] w-full" />
+                <ScreensPanel screens={["mundayneHome", "mundayneProgress"]} className="h-[300px] w-full" />
                 <Status className="self-start">Coming soon</Status>
                 <h3 className="t-h3 text-ink">Mundayne</h3>
                 <Label muted>Mobile app</Label>

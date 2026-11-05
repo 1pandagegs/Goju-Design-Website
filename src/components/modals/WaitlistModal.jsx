@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal, { CloseButton } from "./Modal";
-import { Button, Label, Placeholder } from "../ui";
+import { Button, Label } from "../ui";
+import { Phone } from "../product";
 import { Field, Choice } from "../forms";
 import { sendToStudio } from "../../lib/forms";
 
@@ -53,9 +54,7 @@ export default function WaitlistModal({ initialContact = "", onClose, onJoined }
         </form>
         <div className="relative hidden w-[204px] shrink-0 sm:block">
           <CloseButton onClick={onClose} className="absolute -right-2 -top-2 z-10 bg-cream" />
-          <div className="mt-6 rounded-[28px] border-[6px] border-ink p-0">
-            <Placeholder label="Mundayne home screen" className="h-[380px] rounded-[22px]" />
-          </div>
+          <Phone screen="mundayneHome" className="mt-6 h-[400px] w-full" />
         </div>
       </div>
     </Modal>
