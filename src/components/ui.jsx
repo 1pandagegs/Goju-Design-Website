@@ -104,7 +104,7 @@ export function Picture({ image, className = "", imgClassName = "", onClick, eag
       src={src}
       alt={image.label}
       loading={eager ? "eager" : "lazy"}
-      className={`size-full object-cover ${imgClassName}`}
+      className={`size-full ${imgClassName || "object-cover"}`}
     />
   );
   if (onClick)
