@@ -26,6 +26,14 @@ const team = [
     linkedin: "https://www.linkedin.com/in/chimdiebube-abraham",
     portfolio: "https://davebube.netlify.app/",
   },
+  {
+    key: "femi",
+    name: "Daniel Femi Johnson",
+    role: "Senior Frontend Engineer",
+    bio: "Architects the React and Next.js apps behind our bigger builds, with a focus on performance, scale and clean code.",
+    linkedin: "https://www.linkedin.com/in/daniel-johnson-b3a47723b",
+    portfolio: "https://femijohnson.vercel.app/",
+  },
 ];
 
 export default function About() {
@@ -62,7 +70,7 @@ export default function About() {
           <Label>Team</Label>
           <h2 className="t-h1 max-w-[720px] text-ink">The people behind the work.</h2>
         </div>
-        <div className="grid gap-12 md:grid-cols-2 md:gap-8">
+        <div className="grid gap-12 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           {team.map((p) => (
             <div key={p.name} className="flex flex-col gap-3">
               <Picture image={{ key: p.key, label: `${p.name}, portrait` }} className="aspect-[584/440] w-full bg-cream" imgClassName="object-contain object-bottom" />
