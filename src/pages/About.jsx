@@ -31,7 +31,6 @@ const team = [
     name: "Daniel Femi Johnson",
     role: "Senior Frontend Engineer",
     bio: "Architects the React and Next.js apps behind our bigger builds, with a focus on performance, scale and clean code.",
-    linkedin: "https://www.linkedin.com/in/daniel-johnson-b3a47723b",
     portfolio: "https://femijohnson.vercel.app/",
   },
 ];
@@ -78,9 +77,11 @@ export default function About() {
               <Label>{p.role}</Label>
               <p className="t-body text-muted">{p.bio}</p>
               <div className="flex flex-wrap gap-5">
-                <a href={p.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 t-small text-muted hover:text-ink">
-                  <Icon name="linkedin" size={16} /> LinkedIn
-                </a>
+                {p.linkedin && (
+                  <a href={p.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 t-small text-muted hover:text-ink">
+                    <Icon name="linkedin" size={16} /> LinkedIn
+                  </a>
+                )}
                 {p.portfolio && (
                   <a href={p.portfolio} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 t-small text-muted hover:text-ink">
                     <Icon name="arrow-up-right" size={16} /> Portfolio
