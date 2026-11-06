@@ -24,6 +24,7 @@ const team = [
     role: "Front-End Developer",
     bio: "Turns approved designs into clean, fast, working code, and keeps sites running smoothly after launch.",
     linkedin: "https://www.linkedin.com/in/chimdiebube-abraham",
+    portfolio: "https://davebube.netlify.app/",
   },
 ];
 
