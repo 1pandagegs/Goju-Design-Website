@@ -7,7 +7,7 @@ export const STUDIO = {
   email: "info@gojudesign.com",
   phoneDisplay: "+234 703 864 9237",
   whatsapp: "https://wa.me/2347038649237",
-  calendly: "https://calendly.com/info-gojudesign/30min",
+  calendly: "https://calendly.com/gojudesign-info/30min",
   instagram: "https://www.instagram.com/goju_design",
   linkedin: "https://www.linkedin.com/company/gojudesign/",
 };

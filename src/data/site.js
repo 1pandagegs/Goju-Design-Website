@@ -2,7 +2,7 @@
 export const PHONE_DISPLAY = "+234 703 864 9237";
 export const PHONE_TEL = "+2347038649237";
 export const EMAIL = "info@gojudesign.com";
-export const CALENDLY_URL = "https://calendly.com/info-gojudesign/30min";
+export const CALENDLY_URL = "https://calendly.com/gojudesign-info/30min";
 
 export const whatsappLink = (text = "Hi Goju Design, I'd like to start a project.") =>
   `https://wa.me/2347038649237?text=${encodeURIComponent(text)}`;
