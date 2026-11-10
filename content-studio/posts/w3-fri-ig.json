@@ -1,0 +1,20 @@
+{
+ "platforms": [
+  "instagram"
+ ],
+ "theme": "paper",
+ "slides": [
+  {
+   "layout": "phone",
+   "label": "Made by Goju",
+   "title": "Meet *Mundayne.*",
+   "image": "mundayneHome"
+  },
+  {
+   "layout": "phone",
+   "label": "Progress you can see",
+   "title": "Your day, at a glance.",
+   "image": "mundayneProgress"
+  }
+ ]
+}

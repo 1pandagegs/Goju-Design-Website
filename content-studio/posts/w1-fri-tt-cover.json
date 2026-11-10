@@ -1,0 +1,15 @@
+{
+ "platforms": [
+  "tiktok",
+  "instagram"
+ ],
+ "size": "story",
+ "theme": "paper",
+ "slides": [
+  {
+   "layout": "video-cover",
+   "label": "Real estate websites",
+   "title": "The one feature buyers *trust*"
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+ "platforms": [
+  "linkedin"
+ ],
+ "theme": "paper",
+ "slides": [
+  {
+   "layout": "split",
+   "label": "What we built while we were quiet",
+   "title": "Websites, brands, a podcast and our own products.",
+   "panels": [
+    {
+     "tag": "AS5 Group",
+     "image": "as5Card"
+    },
+    {
+     "tag": "Sabali Limited",
+     "image": "sabCard"
+    }
+   ]
+  }
+ ]
+}

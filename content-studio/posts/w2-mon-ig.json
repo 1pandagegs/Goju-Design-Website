@@ -1,0 +1,33 @@
+{
+ "platforms": [
+  "instagram",
+  "linkedin"
+ ],
+ "theme": "paper",
+ "pdf": true,
+ "slides": [
+  {
+   "layout": "cover",
+   "label": "Website check",
+   "title": "5 signs your website is *costing you customers*"
+  },
+  {
+   "layout": "point",
+   "n": "01",
+   "title": "It takes more than 3 seconds to load on a phone.",
+   "body": "Fix: compress images and drop heavy plugins."
+  },
+  {
+   "layout": "point",
+   "n": "02",
+   "title": "A visitor can't tell what you do in 5 seconds.",
+   "body": "Fix: say what you do, for whom, in one line at the top."
+  },
+  {
+   "layout": "cta",
+   "label": "Free check",
+   "title": "Want us to check yours?",
+   "sub": "Send your website link on WhatsApp."
+  }
+ ]
+}

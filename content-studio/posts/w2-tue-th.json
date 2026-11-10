@@ -1,0 +1,14 @@
+{
+ "platforms": [
+  "threads",
+  "linkedin"
+ ],
+ "theme": "gold",
+ "slides": [
+  {
+   "layout": "statement",
+   "label": "Unpopular opinion",
+   "text": "Most small business websites don't need a contact form. They need a *WhatsApp button.*"
+  }
+ ]
+}

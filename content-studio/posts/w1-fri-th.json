@@ -1,0 +1,14 @@
+{
+ "platforms": [
+  "threads"
+ ],
+ "theme": "white",
+ "slides": [
+  {
+   "layout": "image",
+   "label": "AS5 Group website",
+   "title": "Every project shows its status.",
+   "image": "as5Portfolio"
+  }
+ ]
+}

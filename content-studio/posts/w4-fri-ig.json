@@ -1,0 +1,21 @@
+{
+ "platforms": [
+  "instagram",
+  "linkedin"
+ ],
+ "theme": "ink",
+ "slides": [
+  {
+   "layout": "offer",
+   "label": "Free 30-minute consultation",
+   "title": "Start January *ready.*",
+   "sub": "Websites, brands, content and AI. Written quote within one working day.",
+   "services": [
+    "Websites",
+    "Brand & design",
+    "Social media",
+    "AI & automation"
+   ]
+  }
+ ]
+}

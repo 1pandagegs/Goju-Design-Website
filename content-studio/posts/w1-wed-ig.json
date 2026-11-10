@@ -1,0 +1,48 @@
+{
+ "platforms": [
+  "instagram"
+ ],
+ "theme": "paper",
+ "slides": [
+  {
+   "layout": "cover",
+   "label": "Goju Design · Abuja",
+   "title": "We've been quiet.\n*On purpose.*",
+   "sub": "Here's what we were building."
+  },
+  {
+   "layout": "cover-image",
+   "label": "Website + Instagram",
+   "title": "AS5 Group",
+   "image": "as5Hero"
+  },
+  {
+   "layout": "cover-image",
+   "label": "Rebuilt in code they own",
+   "title": "Sabali Limited",
+   "image": "sabHome"
+  },
+  {
+   "layout": "cover-image",
+   "label": "Full podcast production",
+   "title": "A Message For Her",
+   "image": "amfhYoutube"
+  },
+  {
+   "layout": "list",
+   "label": "What we do",
+   "title": "Four services, done properly.",
+   "items": [
+    "Websites and web apps",
+    "Brand and design",
+    "Social media and content",
+    "AI agents and automation"
+   ]
+  },
+  {
+   "layout": "cta",
+   "title": "Have a project in mind?",
+   "sub": "Send us a message on WhatsApp. We reply within one working day."
+  }
+ ]
+}

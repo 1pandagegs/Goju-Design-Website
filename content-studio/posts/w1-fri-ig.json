@@ -1,0 +1,61 @@
+{
+ "platforms": [
+  "instagram",
+  "linkedin"
+ ],
+ "theme": "paper",
+ "pdf": true,
+ "slides": [
+  {
+   "layout": "cover-image",
+   "label": "Case study · Real estate",
+   "title": "AS5 Group",
+   "image": "as5Hero"
+  },
+  {
+   "layout": "statement",
+   "label": "The brief",
+   "text": "Prove delivery.\n*Don't just promise it.*"
+  },
+  {
+   "layout": "image",
+   "label": "Status on every project",
+   "title": "In progress, Completed or Awarded, at a glance.",
+   "image": "as5Portfolio"
+  },
+  {
+   "layout": "image",
+   "label": "A page for every project",
+   "title": "Three of Us",
+   "image": "as5Project"
+  },
+  {
+   "layout": "list",
+   "label": "Built for how buyers talk",
+   "title": "WhatsApp on every page.",
+   "items": [
+    "Consultation requests",
+    "Project enquiries",
+    "Phone and email backup"
+   ]
+  },
+  {
+   "layout": "stat",
+   "label": "Instagram, since we took over",
+   "value": "35 → *147*",
+   "title": "followers, a 4.2× increase"
+  },
+  {
+   "layout": "quote",
+   "quote": "I love the website. It feels contemporary and premium, and it tells our story perfectly.",
+   "name": "Engr Abuba Sahabi",
+   "role": "CEO, AS5 Group",
+   "logo": "client-as5.png"
+  },
+  {
+   "layout": "cta",
+   "title": "Want a website that works this hard?",
+   "sub": "Free 30-minute consultation. Written quote within one working day."
+  }
+ ]
+}

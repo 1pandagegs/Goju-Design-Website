@@ -1,0 +1,16 @@
+{
+ "platforms": [
+  "instagram"
+ ],
+ "size": "story",
+ "theme": "paper",
+ "slides": [
+  {
+   "layout": "story",
+   "label": "New case study",
+   "title": "How we built AS5 Group's website",
+   "image": "as5Project",
+   "sub": "Tap to read the full post"
+  }
+ ]
+}

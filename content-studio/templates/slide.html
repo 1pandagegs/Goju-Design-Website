@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!--
+  Goju Design social templates. One file renders any slide type; render.mjs injects
+  window.SLIDE = { layout, theme, size, index, total, ...fields } and screenshots #frame.
+  Sizes: feed 1080x1350 (Instagram, LinkedIn, Threads), story 1080x1920 (Stories, Reel/TikTok covers).
+-->
+<style>
+@font-face { font-family: "Montserrat"; font-weight: 500; src: url(../fonts/montserrat-latin-500-normal.woff2) format("woff2") }
+@font-face { font-family: "Montserrat"; font-weight: 600; src: url(../fonts/montserrat-latin-600-normal.woff2) format("woff2") }
+@font-face { font-family: "Montserrat"; font-weight: 700; src: url(../fonts/montserrat-latin-700-normal.woff2) format("woff2") }
+@font-face { font-family: "Montserrat"; font-weight: 800; src: url(../fonts/montserrat-latin-800-normal.woff2) format("woff2") }
+
+:root { --ink: #2a2a2a; --night: #1a1a1a; --gold: #b09b71; --gold-deep: #927845; --paper: #f1eee8; --sand: #ebe6db; --line: #e1dacb; --muted: #6d6d6d; --white: #ffffff }
+* { box-sizing: border-box; margin: 0 }
+html, body { background: #888 }
+body { font-family: "Montserrat", sans-serif; -webkit-font-smoothing: antialiased }
+
+#frame { position: relative; overflow: hidden; display: flex; flex-direction: column; padding: 88px 88px 0 }
+#frame.feed { width: 1080px; height: 1350px }
+#frame.story { width: 1080px; height: 1920px; padding: 220px 88px 0 }
+
+/* Themes */
+.paper { background: var(--paper); color: var(--ink) }
+.white { background: var(--white); color: var(--ink) }
+.ink { background: var(--night); color: var(--white) }
+.gold { background: var(--gold); color: var(--night) }
+.paper .lbl, .white .lbl { color: var(--gold-deep) } .ink .lbl { color: var(--gold) } .gold .lbl { color: var(--night) }
+.paper .soft, .white .soft { color: var(--muted) } .ink .soft { color: #cfc9be } .gold .soft { color: #3a3226 }
+.accent { color: var(--gold-deep) } .ink .accent { color: var(--gold) } .gold .accent { color: var(--white) }
+
+/* Type scale */
+.lbl { font-size: 26px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase }
+.h-xl { font-size: 112px; font-weight: 800; line-height: 1; letter-spacing: -.03em; text-wrap: balance }
+.h-l { font-size: 84px; font-weight: 800; line-height: 1.04; letter-spacing: -.025em; text-wrap: balance }
+.h-m { font-size: 64px; font-weight: 800; line-height: 1.08; letter-spacing: -.02em; text-wrap: balance }
+.h-s { font-size: 48px; font-weight: 700; line-height: 1.15; letter-spacing: -.01em; text-wrap: balance }
+.body { font-size: 36px; font-weight: 500; line-height: 1.45; text-wrap: pretty }
+.small { font-size: 28px; font-weight: 500; line-height: 1.4 }
+
+.main { flex: 1; display: flex; flex-direction: column; gap: 36px; min-height: 0 }
+.center { justify-content: center }
+.bottom { justify-content: flex-end; padding-bottom: 56px }
+
+/* Footer: logo, handle, counter */
+.foot { display: flex; align-items: center; justify-content: space-between; height: 128px; border-top: 2px solid currentColor; border-color: rgba(127,127,127,.25); font-size: 24px; font-weight: 600; letter-spacing: .08em }
+.story .foot { height: 260px; align-items: flex-start; padding-top: 40px }
+.brandmark { display: flex; align-items: center; gap: 16px }
+.brandmark img { width: 52px; height: 52px }
+.brandmark span { font-weight: 800; letter-spacing: .06em }
+.count { font-variant-numeric: tabular-nums; opacity: .7 }
+
+/* Pieces */
+/* Screenshots keep their full width; anything taller than the space is trimmed from the bottom. */
+.shot { border-radius: 28px; overflow: hidden; background: var(--sand); box-shadow: 0 24px 60px rgba(26,26,26,.18); flex: 0 1 auto; min-height: 0; align-self: stretch }
+.shot img { width: 100%; height: auto; display: block }
+.split .shot { flex: 1 } .split .shot img { height: 100%; object-fit: cover; object-position: top left }
+.shot.contain img { object-fit: contain; background: var(--white) }
+.num { font-size: 200px; font-weight: 800; line-height: .85; letter-spacing: -.04em }
+.rows { display: flex; flex-direction: column; gap: 26px }
+.row { display: flex; gap: 28px; align-items: flex-start; font-size: 40px; font-weight: 600; line-height: 1.3 }
+.row b { flex: 0 0 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; font-size: 30px; font-weight: 800; background: var(--sand); color: var(--gold-deep) }
+.ink .row b { background: #2e2a24; color: var(--gold) }
+.stat { font-size: 180px; font-weight: 800; line-height: .95; letter-spacing: -.04em }
+.quote { font-size: 64px; font-weight: 800; line-height: 1.12; letter-spacing: -.02em; text-wrap: balance }
+.who { display: flex; align-items: center; gap: 24px }
+.who .logo { width: 104px; height: 104px; border-radius: 50%; background: var(--white); display: grid; place-items: center; padding: 16px }
+.who .logo img { max-width: 100%; max-height: 100%; object-fit: contain }
+.pill { display: inline-flex; align-items: center; gap: 18px; align-self: flex-start; border-radius: 999px; padding: 30px 48px; font-size: 38px; font-weight: 700 }
+.paper .pill, .white .pill { background: var(--ink); color: var(--white) } .ink .pill { background: var(--gold); color: var(--night) } .gold .pill { background: var(--night); color: var(--white) }
+.pill svg { width: 40px; height: 40px }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; min-height: 0 }
+.split > div { display: flex; flex-direction: column; gap: 16px; min-height: 0 }
+.tag { display: inline-flex; align-self: flex-start; border-radius: 999px; padding: 10px 22px; font-size: 24px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--sand); color: var(--gold-deep) }
+.ink .tag { background: #2e2a24; color: var(--gold) }
+.services { display: flex; flex-wrap: wrap; gap: 14px }
+.services span { border: 2px solid currentColor; border-radius: 999px; padding: 12px 26px; font-size: 28px; font-weight: 600; opacity: .9 }
+.chev { position: absolute; right: 88px; top: 92px; font-size: 26px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .6 }
+.phone { align-self: center; height: 100%; aspect-ratio: 9 / 19.5; border-radius: 56px; border: 14px solid var(--night); overflow: hidden; background: var(--night) }
+.phone img { width: 100%; height: 100%; object-fit: cover; object-position: top }
+.video-safe { position: absolute; inset: 0; pointer-events: none }
+</style>
+</head>
+<body>
+<div id="frame"></div>
+<script>
+const WA_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9l-5.05.9"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>';
+const IMG = (k) => k.includes("/") ? k : `../../src/assets/images/${/\.(png|jpe?g|webp)$/.test(k) ? k : k + ".webp"}`;
+const esc = (s) => String(s ?? "").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+// *text* in titles becomes the accent colour.
+const rich = (s) => esc(s).replace(/\*(.+?)\*/g, '<span class="accent">$1</span>').replace(/\n/g, "<br>");
+
+const LAYOUTS = {
+  // Carousel / document cover: label, big headline, optional sub. Swipe hint top right.
+  cover: (s) => `<div class="chev">${s.total > 1 ? "Swipe →" : ""}</div>
+    <div class="main bottom"><div class="lbl">${esc(s.label)}</div><h1 class="h-xl">${rich(s.title)}</h1>${s.sub ? `<p class="body soft">${rich(s.sub)}</p>` : ""}</div>`,
+  // Cover with a screenshot under the headline (case studies, launches).
+  "cover-image": (s) => `<div class="chev">${s.total > 1 ? "Swipe →" : ""}</div>
+    <div class="main center"><div class="lbl">${esc(s.label)}</div><h1 class="h-xl">${rich(s.title)}</h1><div class="shot ${s.fit === "contain" ? "contain" : ""}"><img src="${IMG(s.image)}"></div></div>`,
+  // One numbered point per slide (education carousels).
+  point: (s) => `<div class="main center"><div class="num accent">${esc(s.n)}</div><h2 class="h-m">${rich(s.title)}</h2>${s.body ? `<p class="body soft">${rich(s.body)}</p>` : ""}</div>`,
+  // A titled list of 3 to 5 short rows.
+  list: (s) => `<div class="main center">${s.label ? `<div class="lbl">${esc(s.label)}</div>` : ""}<h2 class="h-m">${rich(s.title)}</h2>
+    <div class="rows">${s.items.map((t, i) => `<div class="row"><b>${s.icon || String(i + 1)}</b><span>${rich(t)}</span></div>`).join("")}</div></div>`,
+  // Screenshot slide with label + caption (proof).
+  image: (s) => `<div class="main center"><div class="lbl">${esc(s.label)}</div>${s.title ? `<h2 class="h-m">${rich(s.title)}</h2>` : ""}<div class="shot ${s.fit === "contain" ? "contain" : ""}"><img src="${IMG(s.image)}"></div></div>`,
+  // Big number result.
+  stat: (s) => `<div class="main center"><div class="lbl">${esc(s.label)}</div><div class="stat">${rich(s.value)}</div><p class="h-s">${rich(s.title)}</p>${s.body ? `<p class="body soft">${rich(s.body)}</p>` : ""}</div>`,
+  // Client testimonial.
+  quote: (s) => `<div class="main center"><div class="num accent" style="font-size:240px;height:120px">“</div><p class="quote">${rich(s.quote)}</p>
+    <div class="who">${s.logo ? `<div class="logo"><img src="${IMG(s.logo)}"></div>` : ""}<div><div class="h-s" style="font-size:38px">${esc(s.name)}</div><div class="small soft">${esc(s.role)}</div></div></div></div>`,
+  // Before / after or two screens side by side.
+  split: (s) => `<div class="main"><div class="lbl">${esc(s.label)}</div>${s.title ? `<h2 class="h-s">${rich(s.title)}</h2>` : ""}
+    <div class="split">${s.panels.map((p) => `<div><span class="tag">${esc(p.tag)}</span><div class="shot"><img src="${IMG(p.image)}"></div></div>`).join("")}</div></div>`,
+  // Phone screen (apps: Mundayne).
+  phone: (s) => `<div class="main"><div class="lbl">${esc(s.label)}</div><h2 class="h-m">${rich(s.title)}</h2><div style="flex:1;min-height:0;display:flex;justify-content:center"><div class="phone"><img src="${IMG(s.image)}"></div></div></div>`,
+  // Closing call to action.
+  cta: (s) => `<div class="main center"><div class="lbl">${esc(s.label || "Work with us")}</div><h2 class="h-l">${rich(s.title)}</h2>${s.sub ? `<p class="body soft">${rich(s.sub)}</p>` : ""}
+    <div class="pill">${WA_ICON}${esc(s.button || "+234 703 864 9237")}</div></div>`,
+  // Single-image offer (ink by default).
+  offer: (s) => `<div class="main bottom"><div class="lbl">${esc(s.label)}</div><h1 class="h-xl">${rich(s.title)}</h1>${s.sub ? `<p class="body soft">${rich(s.sub)}</p>` : ""}
+    ${s.services ? `<div class="services">${s.services.map((x) => `<span>${esc(x)}</span>`).join("")}</div>` : ""}<div class="pill">${WA_ICON}${esc(s.button || "+234 703 864 9237")}</div></div>`,
+  // Text-as-image statement (Threads, LinkedIn, IG single).
+  statement: (s) => `<div class="main center">${s.label ? `<div class="lbl">${esc(s.label)}</div>` : ""}<p class="${(s.text || "").length > 140 ? "h-m" : "h-l"}">${rich(s.text)}</p></div>`,
+  // Reel / TikTok cover. Text stays inside the centre safe zone.
+  "video-cover": (s) => `<div class="main center" style="padding-bottom:260px">${s.label ? `<div class="lbl">${esc(s.label)}</div>` : ""}<h1 class="h-xl" style="font-size:132px">${rich(s.title)}</h1>${s.sub ? `<p class="body soft">${rich(s.sub)}</p>` : ""}</div>`,
+  // Story: announce a new post, leave room for a link or poll sticker.
+  story: (s) => `<div class="main center"><div class="lbl">${esc(s.label || "New post")}</div><h1 class="h-l">${rich(s.title)}</h1>${s.image ? `<div class="shot"><img src="${IMG(s.image)}"></div>` : ""}<p class="body soft">${rich(s.sub || "Tap the link sticker")}</p></div>`,
+};
+
+function render(s) {
+  const f = document.getElementById("frame");
+  f.className = `${s.size || "feed"} ${s.theme || "paper"}`;
+  f.innerHTML = (LAYOUTS[s.layout] || LAYOUTS.statement)(s) +
+    `<div class="foot"><div class="brandmark"><img src="../../src/assets/images/${s.theme === "ink" ? "logo-mark-light" : "logo-mark-ink"}.png"><span>GOJU DESIGN</span></div>
+     <span>@goju_design</span><span class="count">${s.total > 1 ? `${s.index}/${s.total}` : ""}</span></div>`;
+}
+if (window.SLIDE) render(window.SLIDE);
+</script>
+</body>
+</html>

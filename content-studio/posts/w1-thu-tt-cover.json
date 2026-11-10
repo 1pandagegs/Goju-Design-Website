@@ -1,0 +1,15 @@
+{
+ "platforms": [
+  "tiktok",
+  "instagram"
+ ],
+ "size": "story",
+ "theme": "ink",
+ "slides": [
+  {
+   "layout": "video-cover",
+   "label": "POV",
+   "title": "A design studio that forgot to post its *own work*"
+  }
+ ]
+}
