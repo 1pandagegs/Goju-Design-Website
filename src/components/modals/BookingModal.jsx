@@ -95,8 +95,9 @@ export default function BookingModal({ onClose }) {
       await sendToStudio({
         name,
         email,
+        type: "booking",
         service: "Free consultation booking",
-        details: `Consultation request: ${longDate(date)} at ${slot} WAT (30-minute video call).`,
+        when: `${longDate(date)} at ${slot} WAT`,
       });
       setBooked(true);
     } catch {

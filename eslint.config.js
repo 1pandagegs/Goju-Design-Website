@@ -26,4 +26,9 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  {
+    // Vercel serverless functions and build scripts run in Node.
+    files: ['api/**/*.js', 'scripts/**/*.{js,mjs}'],
+    languageOptions: { globals: globals.node },
+  },
 ])

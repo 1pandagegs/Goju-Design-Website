@@ -20,10 +20,12 @@ export default function WaitlistModal({ initialContact = "", onClose, onJoined }
     try {
       const isMail = contact.includes("@");
       await sendToStudio({
+        type: "waitlist",
         name: "Mundayne waitlist",
         email: isMail ? contact : "",
         phone: isMail ? "" : contact,
         service: "Mundayne waitlist",
+        platform,
         details: `Join the Mundayne waitlist. Platform: ${platform}.`,
       });
       onJoined();

@@ -64,6 +64,7 @@ export default function StartProjectModal({ initial = [], onClose }) {
     setFailed(false);
     try {
       await sendToStudio({
+        type: "enquiry",
         name: form.name,
         email: form.email,
         phone: form.phone,
@@ -71,7 +72,8 @@ export default function StartProjectModal({ initial = [], onClose }) {
         service: pickedNames.join(", "),
         budget: form.budget,
         timeline: form.timeline,
-        details: `${form.details}\n\nPreferred reply: ${form.reply}`,
+        reply: form.reply,
+        details: form.details,
       });
       setStep(4);
     } catch {

@@ -32,7 +32,7 @@ function BriefForm() {
     setSending(true);
     setFailed(false);
     try {
-      await sendToStudio(form);
+      await sendToStudio({ type: "enquiry", ...form });
       setForm(empty);
       showToast("Brief sent", "We will reply within one working day.");
     } catch {
