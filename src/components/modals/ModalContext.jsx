@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import StartProjectModal from "./StartProjectModal";
-import BookingModal from "./BookingModal";
 import WaitlistModal from "./WaitlistModal";
 import Icon from "../Icon";
+import { CALENDLY_URL } from "../../data/site";
 
 const ModalContext = createContext(null);
 
@@ -45,7 +45,8 @@ export function ModalProvider({ children }) {
   const value = useMemo(
     () => ({
       openStart: (initial = []) => setModal({ type: "start", initial }),
-      openBooking: () => setModal({ type: "booking" }),
+      // Booking opens Calendly in a new tab.
+      openBooking: () => window.open(CALENDLY_URL, "_blank", "noopener,noreferrer"),
       openWaitlist: (contact = "") => setModal({ type: "waitlist", contact }),
       showToast,
     }),
@@ -56,7 +57,6 @@ export function ModalProvider({ children }) {
     <ModalContext.Provider value={value}>
       {children}
       {modal?.type === "start" && <StartProjectModal initial={modal.initial} onClose={close} />}
-      {modal?.type === "booking" && <BookingModal onClose={close} />}
       {modal?.type === "waitlist" && (
         <WaitlistModal
           initialContact={modal.contact}
