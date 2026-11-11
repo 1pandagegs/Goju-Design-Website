@@ -5,8 +5,17 @@ import Footer from "./Footer";
 import Icon from "./Icon";
 import { Button } from "./ui";
 import { whatsappLink } from "../data/site";
+import { PageMeta } from "../lib/seo";
 
 const COOKIE_KEY = "goju-cookie-choice";
+
+// Vercel Web Analytics loads only after a visitor allows analytics cookies.
+let analyticsOn = false;
+function enableAnalytics() {
+  if (analyticsOn) return;
+  analyticsOn = true;
+  import("@vercel/analytics").then(({ inject }) => inject());
+}
 
 function readCookieChoice() {
   try {
@@ -20,8 +29,10 @@ function readCookieChoice() {
 function CookieBanner() {
   const [choice, setChoice] = useState(readCookieChoice);
   const [settings, setSettings] = useState(false);
+  useEffect(() => {
+    if (choice === "all") enableAnalytics();
+  }, [choice]);
   const [analytics, setAnalytics] = useState(true);
-  if (choice) return null;
 
   const save = (value) => {
     try {
@@ -31,6 +42,8 @@ function CookieBanner() {
     }
     setChoice(value);
   };
+
+  if (choice) return null;
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 p-4 lg:bottom-8 lg:p-0">
@@ -83,6 +96,7 @@ export default function Layout() {
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollManager />
+      <PageMeta />
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-cream">
         Skip to content
       </a>
