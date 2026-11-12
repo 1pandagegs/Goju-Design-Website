@@ -1,0 +1,90 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Goju Design motion videos. Each video is a list of scenes in videos.js.
+     Open player.html?v=<name> in a browser to preview; render.cjs turns them into MP4s. -->
+<style>
+@font-face{font-family:M;src:url(../fonts/montserrat-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:M;src:url(../fonts/montserrat-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:M;src:url(../fonts/montserrat-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:M;src:url(../fonts/montserrat-latin-800-normal.woff2);font-weight:800}
+@font-face{font-family:Anton;src:url(../fonts/anton-latin-400-normal.woff2)}
+@font-face{font-family:Serif;src:url(../fonts/instrument-serif-latin-400-italic.woff2);font-style:italic}
+:root{--ink:#2a2a2a;--night:#1a1a1a;--gold:#b09b71;--deep:#927845;--paper:#f1eee8;--sand:#ebe6db;--line:#e1dacb;--muted:#6d6d6d;--white:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000}
+#stage{width:1080px;height:1920px;position:relative;overflow:hidden;font-family:M,sans-serif;color:var(--ink)}
+.scene,.persist{position:absolute;inset:0;overflow:hidden}
+.persist{pointer-events:none;z-index:5}
+.paper{background:var(--paper);color:var(--ink)} .night{background:var(--night);color:var(--paper)} .deep{background:var(--deep);color:var(--paper)} .white{background:#fff;color:var(--ink)}
+/* Layout: keep text out of the top 250px, bottom 420px and right 140px, where the apps put their buttons. */
+.c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 90px 140px}
+.abs{position:absolute}
+.mont{font-weight:800;letter-spacing:-.05em;line-height:.9;text-transform:lowercase}
+.anton{font-family:Anton;text-transform:uppercase;line-height:.95;letter-spacing:.005em}
+.serif{font-family:Serif;font-style:italic;font-weight:400;letter-spacing:-.01em;text-transform:none}
+.gold{color:var(--gold)} .gdeep{color:var(--deep)} .inkc{color:var(--ink)} .paperc{color:var(--paper)} .mut{color:var(--muted)}
+.label{font-weight:700;font-size:30px;letter-spacing:.16em;text-transform:uppercase}
+.body{font-weight:600;font-size:40px;line-height:1.35}
+.pill{display:inline-flex;align-items:center;gap:18px;padding:30px 54px;border-radius:999px;font-weight:800;font-size:44px}
+.chip{display:inline-block;padding:18px 34px;border-radius:999px;background:#fff;color:var(--ink);font-weight:700;font-size:34px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.mark{display:inline-block}.mark svg{display:block;width:100%;height:100%}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card{border-radius:26px;overflow:hidden;box-shadow:0 50px 100px rgba(0,0,0,.35);background:#111}
+.card img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left}
+.brk i{position:absolute;width:34px;height:34px;border:4px solid currentColor;opacity:.55}
+.brk i:nth-child(1){left:70px;top:230px;border-right:0;border-bottom:0}.brk i:nth-child(2){right:70px;top:230px;border-left:0;border-bottom:0}
+.brk i:nth-child(3){left:70px;bottom:400px;border-right:0;border-top:0}.brk i:nth-child(4){right:70px;bottom:400px;border-left:0;border-top:0}
+.phone{position:absolute;left:260px;width:560px;height:1130px;border-radius:84px;border:16px solid var(--night);background:var(--paper);overflow:hidden;box-shadow:0 60px 120px rgba(0,0,0,.4)}
+.phone:before{content:"";position:absolute;left:50%;top:22px;width:150px;height:36px;margin-left:-75px;border-radius:20px;background:var(--night);z-index:3}
+.bar{border-radius:14px;background:var(--line)}
+/* Animations: add class "a" plus one name; --d is the delay inside the scene, --t the duration. */
+.a{animation-duration:var(--t,.45s);animation-delay:var(--d,0s);animation-fill-mode:both;animation-timing-function:cubic-bezier(.2,.8,.2,1);display:inline-block}
+.blur{animation-name:kBlur}.up{animation-name:kUp}.down{animation-name:kDown}.left{animation-name:kLeft}.right{animation-name:kRight}.pop{animation-name:kPop}
+.fade{animation-name:kFade}.wipe{animation-name:kWipe}.wipeR{animation-name:kWipeR}.rise{animation-name:kRise}.tilt{animation-name:kTilt}.zoom{animation-name:kZoom;animation-timing-function:linear}
+.lit{animation-name:kLit}.swing{animation:kSwing 3s ease-in-out infinite;transform-origin:50% 0}
+.marq{animation:kMarq 14s linear infinite;display:inline-block;white-space:nowrap}.marq.rev{animation-direction:reverse}
+@keyframes kBlur{from{opacity:0;filter:blur(28px);transform:scale(1.08)}to{opacity:1;filter:blur(0);transform:none}}
+@keyframes kUp{from{opacity:0;transform:translateY(90px)}to{opacity:1;transform:none}}
+@keyframes kDown{from{opacity:0;transform:translateY(-90px)}to{opacity:1;transform:none}}
+@keyframes kLeft{from{opacity:0;transform:translateX(160px)}to{opacity:1;transform:none}}
+@keyframes kRight{from{opacity:0;transform:translateX(-160px)}to{opacity:1;transform:none}}
+@keyframes kPop{0%{opacity:0;transform:scale(.6)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:none}}
+@keyframes kFade{from{opacity:0}to{opacity:1}}
+@keyframes kWipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes kWipeR{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
+@keyframes kRise{from{transform:translateY(1300px)}to{transform:none}}
+@keyframes kTilt{from{opacity:0;transform:perspective(1400px) rotateX(62deg) scale(.35)}to{opacity:1;transform:perspective(1400px) rotateX(0) scale(1)}}
+@keyframes kZoom{from{transform:scale(1)}to{transform:scale(1.1)}}
+@keyframes kLit{from{color:#cfc8b8}to{color:var(--ink)}}
+@keyframes kSwing{0%,100%{transform:rotate(22deg)}50%{transform:rotate(-22deg)}}
+@keyframes kMarq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style></head>
+<body><div id="stage"></div>
+<script src="assets/mark.js"></script>
+<script src="videos.js"></script>
+<script>
+const name = new URLSearchParams(location.search).get("v") || Object.keys(VIDEOS)[0];
+const video = VIDEOS[name], stage = document.getElementById("stage");
+const fillMarks = (h) => h.replace(/(<span class="mark"[^>]*>)<\/span>/g, `$1<svg viewBox="0 0 190 190" fill="none">${MARK_PATHS}</svg></span>`);
+let t0 = 0;
+const scenes = video.scenes.map(([dur, bg, html, label], i) => {
+  const el = document.createElement("div"); el.className = "scene " + bg; el.innerHTML = fillMarks(html); stage.appendChild(el);
+  const s = { el, start: t0, end: t0 + dur, label: label || `scene-${i + 1}` }; el._start = t0; t0 += dur; return s;
+});
+if (video.persist) { const p = document.createElement("div"); p.className = "persist"; p.innerHTML = fillMarks(video.persist); stage.appendChild(p); }
+window.TOTAL = t0;
+window.SCENES = scenes.map((s) => ({ start: s.start, end: s.end, label: s.label }));
+// Jump every animation to time t (seconds) so each frame can be captured exactly.
+window.seek = (t) => {
+  scenes.forEach((s) => (s.el.style.visibility = t >= s.start && t < s.end ? "visible" : "hidden"));
+  document.getAnimations().forEach((a) => {
+    a.pause();
+    const sc = a.effect.target.closest(".scene");
+    a.currentTime = Math.max(0, (t - (sc ? sc._start : 0)) * 1000);
+  });
+};
+// Live preview when opened by hand; add &still=<seconds> to freeze on one moment.
+const still = new URLSearchParams(location.search).get("still");
+if (still !== null) document.fonts.ready.then(() => seek(+still));
+else if (!navigator.webdriver) { const begin = performance.now(); (function loop() { seek(((performance.now() - begin) / 1000) % TOTAL); requestAnimationFrame(loop); })(); }
+</script></body></html>

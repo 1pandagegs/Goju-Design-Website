@@ -30,3 +30,13 @@ Needs Playwright with Chromium. Images come from `src/assets/images`, so a post 
 ```
 
 Wrap words in `*asterisks*` to colour them gold. Slide fields per layout are documented at the top of each layout in `templates/slide.html`.
+
+## Motion videos (Reels and TikTok)
+
+`content-studio/video/` holds five short kinetic videos in the brand style (1080 x 1920, 30 fps, no sound).
+
+- `videos.js`: the wording and timing of every scene. Edit text here.
+- `player.html?v=<name>`: open in a browser to preview a video. Add `&still=3.2` to freeze on a moment.
+- `node content-studio/video/render.cjs [name]`: renders `out/video/<name>.mp4` plus one clip per scene in `out/video/<name>-scenes/`. Needs ffmpeg.
+
+Videos have no music or voiceover on purpose. Add sound, captions and trims in CapCut. Key text stays clear of the top 250 px, bottom 420 px and right 140 px, where the apps place their buttons.
