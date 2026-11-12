@@ -26,7 +26,7 @@ const wire = (d = 0) => `<div style="padding:110px 44px 0;display:flex;flex-dire
   ${A(`<div class="bar" style="width:320px;height:30px"></div>`, "up", d + 0.32)}
   ${A(`<div class="bar" style="width:220px;height:74px;border-radius:40px;background:var(--ink)"></div>`, "pop", d + 0.45)}
   ${A(`<div class="bar" style="width:440px;height:260px;background:var(--night)"></div>`, "up", d + 0.55)}</div>`;
-const liveSite = (fade) => `<img class="${fade ? "a fade" : ""}" style="--t:.5s;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:18% 0" src="${IMG}as5Hero.webp">`;
+const liveSite = (fade) => `<img class="${fade ? "a fade" : ""}" style="--t:.5s;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top" src="assets/sabali-mobile.jpg">`;
 const step = (n, word) => `<div class="abs" style="left:90px;top:290px;display:flex;align-items:baseline;gap:26px">${A(`<span class="label" style="opacity:.7">${n}</span>`, "fade", 0)}${A(`<span class="mont" style="font-size:150px;text-transform:none">${word}</span>`, "up", 0.05)}</div>`;
 const marqueeRow = (text, cls, rev, style = "") => `<div style="overflow:visible;white-space:nowrap;${style}"><span class="marq ${rev ? "rev" : ""} ${cls}" style="font-size:150px;font-weight:800;letter-spacing:-.04em">${(text + " · ").repeat(8)}</span></div>`;
 const workCard = (img, label, top, d) => `<div class="abs a up" style="--d:${d}s;--t:.6s;left:120px;top:${top}px;width:760px">
